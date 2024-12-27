@@ -10,6 +10,16 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(120deg, #2c3e50, #bdc3c7);
             overflow: hidden;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .container {
@@ -59,12 +69,33 @@
             font-size: 18px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
             transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .sidebar button:hover {
             transform: translateY(-5px);
             background: linear-gradient(120deg, #8e44ad, #2980b9);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease-in-out;
+            z-index: 1;
+        }
+
+        .sidebar button:hover:after {
+            transform: scaleX(1);
+            transform-origin: right;
         }
 
         .content {
@@ -75,75 +106,47 @@
             border-radius: 20px;
             margin: 20px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 1s ease-out;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-            padding: 20px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        @keyframes slideIn {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        form input, form select, form button {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-        }
-
-        form button {
-            background: linear-gradient(120deg, #3498db, #9b59b6);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        form button:hover {
-            background: linear-gradient(120deg, #9b59b6, #3498db);
-        }
-
-        .reservations {
-            margin-top: 30px;
-            padding: 10px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .reservations h2 {
-            margin-bottom: 15px;
+        .content h1 {
+            font-size: 42px;
             color: #34495e;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
-        .reservations ul {
-            list-style: none;
-            padding: 0;
+        .content p {
+            font-size: 20px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            line-height: 1.8;
         }
 
-        .reservations li {
-            padding: 10px;
-            border-bottom: 1px solid #bdc3c7;
+        .content.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s;
+        }
+
+        .content img {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="circle"></div>
-            <button data-page="home">Home</button>
-            <button data-page="prenotazioni">Prenota una partita</button>
-        </div>
-        <div class="content">
-            <h1>TEAM OLYMPIAKOS</h1>
-            <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
-            <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
-        </div>
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll(".sidebar button");
@@ -154,29 +157,22 @@
                     <h1>TEAM OLYMPIAKOS</h1>
                     <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
                     <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+                    <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in azione">
                 `,
-                prenotazioni: `
-                    <h1>Prenota una partita</h1>
-                    <form id="reservationForm">
-                        <input type="text" id="playerName" placeholder="Il tuo nome" required>
-                        <input type="date" id="matchDate" required>
-                        <input type="time" id="matchTime" required>
-                        <select id="matchType" required>
-                            <option value="" disabled selected>Seleziona il tipo di partita</option>
-                            <option value="Calcio">Calcio</option>
-                            <option value="Basket">Basket</option>
-                            <option value="Tennis">Tennis</option>
-                        </select>
-                        <button type="submit">Prenota</button>
-                    </form>
-                    <div class="reservations">
-                        <h2>Prenotazioni</h2>
-                        <ul id="reservationList"></ul>
-                    </div>
+                chiSiamo: `
+                    <h1>Chi siamo</h1>
+                    <p>Team Olympiakos è formato da persone straordinarie che credono nella forza della collaborazione.</p>
+                    <p>Il nostro obiettivo è creare un ambiente positivo in cui ogni membro possa eccellere.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Il nostro team">
+                `,
+                cosaFacciamo: `
+                    <h1>Cosa facciamo</h1>
+                    <p>Offriamo soluzioni innovative per sfide complesse, con un focus sulla crescita sostenibile.</p>
+                    <p>Il nostro team lavora su progetti ambiziosi che ispirano e trasformano.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Progetti in corso">
                 `,
             };
-
-            const reservations = []; // Array per salvare le prenotazioni
 
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
@@ -185,38 +181,27 @@
                     setTimeout(() => {
                         content.innerHTML = pages[page];
                         content.classList.remove("hidden");
-
-                        if (page === "prenotazioni") {
-                            setupReservationForm();
-                        }
                     }, 400);
                 });
             });
-
-            function setupReservationForm() {
-                const form = document.getElementById("reservationForm");
-                const list = document.getElementById("reservationList");
-
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-
-                    const name = document.getElementById("playerName").value;
-                    const date = document.getElementById("matchDate").value;
-                    const time = document.getElementById("matchTime").value;
-                    const type = document.getElementById("matchType").value;
-
-                    const reservation = { name, date, time, type };
-                    reservations.push(reservation);
-
-                    const listItem = document.createElement("li");
-                    listItem.textContent = `${name} ha prenotato una partita di ${type} il ${date} alle ${time}`;
-                    list.appendChild(listItem);
-
-                    form.reset();
-                });
-            }
         });
     </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="circle"></div>
+            <button data-page="home">Home</button>
+            <button data-page="chiSiamo">Chi siamo?</button>
+            <button data-page="cosaFacciamo">Cosa facciamo?</button>
+        </div>
+        <div class="content">
+            <h1>TEAM OLYMPIAKOS</h1>
+            <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
+            <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+            <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+            <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos">
+        </div>
+    </div>
 </body>
-
 </html>
