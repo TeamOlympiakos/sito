@@ -1,0 +1,51 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #ecf0f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+form input, form select, form button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+}
+
+form button {
+    background: linear-gradient(120deg, #3498db, #9b59b6);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(120deg, #9b59b6, #3498db);
+}
+
+.reservations {
+    margin-top: 30px;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.reservations h2 {
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+.reservations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.reservations li {
+    padding: 10px;
+    border-bottom: 1px solid #bdc3c7;
+}
