@@ -4,7 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Olympiakos</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #2c3e50, #bdc3c7);
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 25%;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar .circle {
+            width: 180px;
+            height: 180px;
+            background: url('https://via.placeholder.com/400') no-repeat center/cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .sidebar button {
+            background: linear-gradient(120deg, #2980b9, #8e44ad);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .sidebar button:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(120deg, #8e44ad, #2980b9);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: #f4f4f9;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        form input, form select, form button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+        }
+
+        form button {
+            background: linear-gradient(120deg, #3498db, #9b59b6);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        form button:hover {
+            background: linear-gradient(120deg, #9b59b6, #3498db);
+        }
+
+        .reservations {
+            margin-top: 30px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .reservations h2 {
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .reservations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reservations li {
+            padding: 10px;
+            border-bottom: 1px solid #bdc3c7;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -19,6 +143,80 @@
             <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".sidebar button");
+            const content = document.querySelector(".content");
+
+            const pages = {
+                home: `
+                    <h1>TEAM OLYMPIAKOS</h1>
+                    <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
+                    <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+                `,
+                prenotazioni: `
+                    <h1>Prenota una partita</h1>
+                    <form id="reservationForm">
+                        <input type="text" id="playerName" placeholder="Il tuo nome" required>
+                        <input type="date" id="matchDate" required>
+                        <input type="time" id="matchTime" required>
+                        <select id="matchType" required>
+                            <option value="" disabled selected>Seleziona il tipo di partita</option>
+                            <option value="Calcio">Calcio</option>
+                            <option value="Basket">Basket</option>
+                            <option value="Tennis">Tennis</option>
+                        </select>
+                        <button type="submit">Prenota</button>
+                    </form>
+                    <div class="reservations">
+                        <h2>Prenotazioni</h2>
+                        <ul id="reservationList"></ul>
+                    </div>
+                `,
+            };
+
+            const reservations = []; // Array per salvare le prenotazioni
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const page = this.dataset.page;
+                    content.classList.add("hidden");
+                    setTimeout(() => {
+                        content.innerHTML = pages[page];
+                        content.classList.remove("hidden");
+
+                        if (page === "prenotazioni") {
+                            setupReservationForm();
+                        }
+                    }, 400);
+                });
+            });
+
+            function setupReservationForm() {
+                const form = document.getElementById("reservationForm");
+                const list = document.getElementById("reservationList");
+
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById("playerName").value;
+                    const date = document.getElementById("matchDate").value;
+                    const time = document.getElementById("matchTime").value;
+                    const type = document.getElementById("matchType").value;
+
+                    const reservation = { name, date, time, type };
+                    reservations.push(reservation);
+
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `${name} ha prenotato una partita di ${type} il ${date} alle ${time}`;
+                    list.appendChild(listItem);
+
+                    form.reset();
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
