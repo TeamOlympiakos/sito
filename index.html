@@ -7,19 +7,10 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(120deg, #2c3e50, #bdc3c7);
+            font-family: 'Arial', sans-serif;
+            background: #1a1a1a;
+            color: #f4f4f4;
             overflow: hidden;
-            animation: fadeIn 1.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
 
         .container {
@@ -29,122 +20,83 @@
         }
 
         .sidebar {
-            width: 25%;
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            color: white;
+            width: 20%;
+            background: #101010;
+            color: #f4f4f4;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 20px;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            padding-top: 30px;
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.7);
         }
 
-        .sidebar .circle {
-            width: 180px;
-            height: 180px;
+        .sidebar .logo {
+            width: 150px;
+            height: 150px;
             background: url('https://via.placeholder.com/400') no-repeat center/cover;
             border-radius: 50%;
             margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulse 2.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
         }
 
         .sidebar button {
-            background: linear-gradient(120deg, #2980b9, #8e44ad);
-            color: white;
-            border: none;
-            padding: 15px 30px;
+            width: 80%;
+            background: transparent;
+            color: #f4f4f4;
+            border: 2px solid #f4f4f4;
+            padding: 10px 20px;
             margin: 10px 0;
             border-radius: 50px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            text-transform: uppercase;
+            transition: all 0.3s;
         }
 
         .sidebar button:hover {
-            transform: translateY(-5px);
-            background: linear-gradient(120deg, #8e44ad, #2980b9);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-        }
-
-        .sidebar button:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease-in-out;
-            z-index: 1;
-        }
-
-        .sidebar button:hover:after {
-            transform: scaleX(1);
-            transform-origin: right;
+            background: #f4f4f4;
+            color: #101010;
         }
 
         .content {
             flex-grow: 1;
             padding: 40px;
             overflow-y: auto;
-            background: #f4f4f9;
-            border-radius: 20px;
+            background: #282828;
+            border-radius: 15px;
             margin: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            animation: slideIn 1s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .content h1 {
-            font-size: 42px;
-            color: #34495e;
+            font-size: 36px;
+            color: #f4f4f4;
             margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         .content p {
-            font-size: 20px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        .content.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s ease-in-out, transform 0.4s;
+            font-size: 18px;
+            color: #cfcfcf;
+            line-height: 1.6;
         }
 
         .content img {
             width: 100%;
             border-radius: 15px;
             margin-top: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .content.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s;
+        }
+
+        .content.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
     <script>
@@ -154,23 +106,22 @@
 
             const pages = {
                 home: `
-                    <h1>TEAM OLYMPIAKOS</h1>
-                    <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
-                    <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
-                    <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in azione">
+                    <h1>Team Olympiakos</h1>
+                    <p>Welcome to the official Team Olympiakos website.</p>
+                    <p>We are a team united by passion and dedication to success.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in action">
                 `,
-                chiSiamo: `
-                    <h1>Chi siamo</h1>
-                    <p>Team Olympiakos è formato da persone straordinarie che credono nella forza della collaborazione.</p>
-                    <p>Il nostro obiettivo è creare un ambiente positivo in cui ogni membro possa eccellere.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Il nostro team">
+                about: `
+                    <h1>About Us</h1>
+                    <p>Team Olympiakos is made up of extraordinary individuals who believe in the power of teamwork.</p>
+                    <p>Our mission is to create a positive environment where every member can excel.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Our team">
                 `,
-                cosaFacciamo: `
-                    <h1>Cosa facciamo</h1>
-                    <p>Offriamo soluzioni innovative per sfide complesse, con un focus sulla crescita sostenibile.</p>
-                    <p>Il nostro team lavora su progetti ambiziosi che ispirano e trasformano.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Progetti in corso">
+                projects: `
+                    <h1>Our Projects</h1>
+                    <p>We offer innovative solutions for complex challenges, with a focus on sustainable growth.</p>
+                    <p>Our team works on ambitious projects that inspire and transform.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Current projects">
                 `,
             };
 
@@ -190,16 +141,15 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <div class="circle"></div>
+            <div class="logo"></div>
             <button data-page="home">Home</button>
-            <button data-page="chiSiamo">Chi siamo?</button>
-            <button data-page="cosaFacciamo">Cosa facciamo?</button>
+            <button data-page="about">About Us</button>
+            <button data-page="projects">Projects</button>
         </div>
         <div class="content">
-            <h1>TEAM OLYMPIAKOS</h1>
-            <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
-            <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
-            <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+            <h1>Team Olympiakos</h1>
+            <p>Welcome to the official Team Olympiakos website.</p>
+            <p>We are a team united by passion and dedication to success.</p>
             <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos">
         </div>
     </div>
