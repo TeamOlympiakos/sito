@@ -3,213 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to the official San Siro Stadium website. Discover events, book tickets, and explore the iconic venue in Milan.">
-    <title>San Siro Stadium</title>
+    <title>Team Olympiakos</title>
     <style>
-        /* General Styles */
         body {
-            font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #2c3e50, #bdc3c7);
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-in;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: #fff;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        /* Header Styles */
-        .main-header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
-        }
-        .main-header .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .main-header .main-nav ul {
-            list-style: none;
             display: flex;
-            gap: 15px;
-            padding: 0;
-            margin: 0;
-        }
-        .main-header .main-nav ul li {
-            display: inline;
-        }
-        .main-header .main-nav ul li a {
-            color: #fff;
-            font-weight: bold;
+            flex-direction: row;
+            min-height: 100vh;
         }
 
-        /* Hero Section Styles */
-        .hero {
-            background: url('https://via.placeholder.com/1200x600') no-repeat center center/cover;
-            color: #fff;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        /* Events Section */
-        .events {
-            padding: 50px 0;
-            background: #f4f4f4;
-        }
-        .events .event {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .events .event h3 {
-            margin: 0 0 10px 0;
-        }
-
-        /* Stadium Section */
-        .stadium {
-            padding: 50px 0;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 50px 0;
-            background: #f4f4f4;
-        }
-        .contact form {
+        .sidebar {
+            width: 25%;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-        .contact input, .contact textarea, .contact button {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .contact button {
-            background: #007BFF;
-            color: #fff;
-            cursor: pointer;
-        }
-        .contact button:hover {
-            background: #0056b3;
+            align-items: center;
+            padding-top: 20px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         }
 
-        /* Footer */
-        .main-footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
+        .sidebar .circle {
+            width: 180px;
+            height: 180px;
+            background: url('https://via.placeholder.com/400') no-repeat center/cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .sidebar button {
+            background: linear-gradient(120deg, #2980b9, #8e44ad);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar button:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(120deg, #8e44ad, #2980b9);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease-in-out;
+            z-index: 1;
+        }
+
+        .sidebar button:hover:after {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: #f4f4f9;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .content h1 {
+            font-size: 42px;
+            color: #34495e;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .content p {
+            font-size: 20px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .content.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s;
+        }
+
+        .content img {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
     </style>
-</head>
-<body>
-    <header class="main-header">
-        <div class="container">
-            <h1 class="logo"><a href="#">San Siro Stadium</a></h1>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#tickets">Tickets</a></li>
-                    <li><a href="#stadium">The Stadium</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Welcome to San Siro Stadium</h2>
-            <p>Your gateway to unforgettable events and experiences.</p>
-            <a href="#tickets" class="btn">Book Tickets</a>
-        </div>
-    </section>
-
-    <section id="events" class="events">
-        <div class="container">
-            <h2>Upcoming Events</h2>
-            <div class="event">
-                <h3>Concert: Famous Band</h3>
-                <p>Date: 25th June 2025 | Time: 8:00 PM</p>
-                <a href="#" class="btn">Learn More</a>
-            </div>
-            <div class="event">
-                <h3>Football Match: Team A vs Team B</h3>
-                <p>Date: 5th July 2025 | Time: 6:00 PM</p>
-                <a href="#" class="btn">Learn More</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="stadium" class="stadium">
-        <div class="container">
-            <h2>The Stadium</h2>
-            <p>Explore one of the most iconic stadiums in the world, home to legendary teams and unforgettable moments.</p>
-            <a href="#" class="btn">Discover More</a>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <form action="#" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit" class="btn">Send</button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 San Siro Stadium. All rights reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        // JavaScript for interactivity
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".sidebar button");
+            const content = document.querySelector(".content");
+
+            const pages = {
+                home: `
+                    <h1>TEAM OLYMPIAKOS</h1>
+                    <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
+                    <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+                    <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in azione">
+                `,
+                chiSiamo: `
+                    <h1>Chi siamo</h1>
+                    <p>Team Olympiakos è formato da persone straordinarie che credono nella forza della collaborazione.</p>
+                    <p>Il nostro obiettivo è creare un ambiente positivo in cui ogni membro possa eccellere.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Il nostro team">
+                `,
+                cosaFacciamo: `
+                    <h1>Cosa facciamo</h1>
+                    <p>Offriamo soluzioni innovative per sfide complesse, con un focus sulla crescita sostenibile.</p>
+                    <p>Il nostro team lavora su progetti ambiziosi che ispirano e trasformano.</p>
+                    <img src="https://via.placeholder.com/800x400" alt="Progetti in corso">
+                `,
+            };
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const page = this.dataset.page;
+                    content.classList.add("hidden");
+                    setTimeout(() => {
+                        content.innerHTML = pages[page];
+                        content.classList.remove("hidden");
+                    }, 400);
+                });
             });
         });
     </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="circle"></div>
+            <button data-page="home">Home</button>
+            <button data-page="chiSiamo">Chi siamo?</button>
+            <button data-page="cosaFacciamo">Cosa facciamo?</button>
+        </div>
+        <div class="content">
+            <h1>TEAM OLYMPIAKOS</h1>
+            <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
+            <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+            <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+            <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos">
+        </div>
+    </div>
 </body>
 </html>
