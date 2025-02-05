@@ -21,13 +21,13 @@
         display: flex;
         flex-direction: row;
         min-height: 100vh;
-        position: relative; /* Per mantenere la posizione del contenuto */
+        position: relative;
         z-index: 1;
     }
 
     .sidebar {
         width: 25%;
-        background: rgba(255, 255, 255, 0.8); /* Semi-trasparente per far vedere il background sfocato */
+        background: rgba(255, 255, 255, 0.1);
         color: white;
         display: flex;
         flex-direction: column;
@@ -46,25 +46,59 @@
         animation: pulse 2.5s infinite;
     }
 
-    .sidebar button {
-        background: linear-gradient(120deg, #e74c3c, #c0392b); /* Rosso */
+    /* Menu a tendina */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin: 10px 0;
+    }
+
+    .dropdown button {
+        background: linear-gradient(120deg, #e74c3c, #c0392b);
         color: white;
         border: none;
         padding: 15px 30px;
-        margin: 10px 0;
         border-radius: 50px;
         cursor: pointer;
         font-size: 18px;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         transition: all 0.4s ease;
-        position: relative;
-        overflow: hidden;
     }
 
-    .sidebar button:hover {
+    .dropdown button:hover {
         transform: translateY(-5px);
         background: linear-gradient(120deg, #c0392b, #e74c3c);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .dropdown-content button {
+        background: none;
+        color: #34495e;
+        padding: 12px 16px;
+        text-align: left;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .dropdown-content button:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
     }
 
     .content {
@@ -76,7 +110,7 @@
         margin: 20px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         animation: slideIn 1s ease-out;
-        z-index: 2; /* Per mantenere il contenuto sopra lo sfondo */
+        z-index: 2;
     }
 
     @keyframes fadeIn {
@@ -127,55 +161,60 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 </style>
- 
- 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const buttons = document.querySelectorAll(".sidebar button");
-            const content = document.querySelector(".content");
 
-            const pages = {
-                home: `
-                    <h1>TEAM OLYMPIAKOS</h1>
-                    <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
-                    <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
-                    <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in azione">
-                `,
-                chiSiamo: `
-                    <h1>Chi siamo</h1>
-                    <p>Team Olympiakos è formato da persone straordinarie che credono nella forza della collaborazione.</p>
-                    <p>Il nostro obiettivo è creare un ambiente positivo in cui ogni membro possa eccellere.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Il nostro team">
-                `,
-                cosaFacciamo: `
-                    <h1>Cosa facciamo</h1>
-                    <p>Offriamo soluzioni innovative per sfide complesse, con un focus sulla crescita sostenibile.</p>
-                    <p>Il nostro team lavora su progetti ambiziosi che ispirano e trasformano.</p>
-                    <img src="https://via.placeholder.com/800x400" alt="Progetti in corso">
-                `,
-            };
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".dropdown-content button");
+        const content = document.querySelector(".content");
 
-            buttons.forEach(button => {
-                button.addEventListener("click", function () {
-                    const page = this.dataset.page;
-                    content.classList.add("hidden");
-                    setTimeout(() => {
-                        content.innerHTML = pages[page];
-                        content.classList.remove("hidden");
-                    }, 400);
-                });
+        const pages = {
+            home: `
+                <h1>TEAM OLYMPIAKOS</h1>
+                <p>Benvenuto sul sito ufficiale di Team Olympiakos!</p>
+                <p>Siamo una squadra unita dalla passione per lo sport e la dedizione al successo.</p>
+                <p>Unisciti a noi per scoprire come trasformiamo le sfide in opportunità e lavoriamo insieme per raggiungere nuovi traguardi.</p>
+                <img src="https://via.placeholder.com/800x400" alt="Team Olympiakos in azione">
+            `,
+            chiSiamo: `
+                <h1>Chi siamo</h1>
+                <p>Team Olympiakos è formato da persone straordinarie che credono nella forza della collaborazione.</p>
+                <p>Il nostro obiettivo è creare un ambiente positivo in cui ogni membro possa eccellere.</p>
+                <img src="https://via.placeholder.com/800x400" alt="Il nostro team">
+            `,
+            cosaFacciamo: `
+                <h1>Cosa facciamo</h1>
+                <p>Offriamo soluzioni innovative per sfide complesse, con un focus sulla crescita sostenibile.</p>
+                <p>Il nostro team lavora su progetti ambiziosi che ispirano e trasformano.</p>
+                <img src="https://via.placeholder.com/800x400" alt="Progetti in corso">
+            `,
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                const page = this.dataset.page;
+                content.classList.add("hidden");
+                setTimeout(() => {
+                    content.innerHTML = pages[page];
+                    content.classList.remove("hidden");
+                }, 400);
             });
         });
-    </script>
+    });
+</script>
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <div class="circle"></div>
-            <button data-page="home">Home</button>
-            <button data-page="chiSiamo">Chi siamo?</button>
-            <button data-page="cosaFacciamo">Cosa facciamo?</button>
+            <!-- Menu a tendina -->
+            <div class="dropdown">
+                <button>Menu</button>
+                <div class="dropdown-content">
+                    <button data-page="home">Home</button>
+                    <button data-page="chiSiamo">Chi siamo?</button>
+                    <button data-page="cosaFacciamo">Cosa facciamo?</button>
+                </div>
+            </div>
         </div>
         <div class="content">
             <h1>TEAM OLYMPIAKOS</h1>
