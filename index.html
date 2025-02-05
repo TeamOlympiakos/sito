@@ -4,122 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Olympiakos</title>
+
     <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(120deg, #e74c3c, #c0392b);
-            overflow: hidden;
-            animation: fadeIn 1.5s ease-in;
-        }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #800000; /* Bordeaux */
+        background-image: url('https://via.placeholder.com/1920x1080'); /* Immagine di sfondo */
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px); /* Effetto di sfocatura sul background */
+        overflow: hidden;
+        animation: fadeIn 1.5s ease-in;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .container {
+        display: flex;
+        flex-direction: row;
+        min-height: 100vh;
+        position: relative; /* Per mantenere la posizione del contenuto */
+        z-index: 1;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: row;
-            min-height: 100vh;
-        }
+    .sidebar {
+        width: 25%;
+        background: rgba(255, 255, 255, 0.8); /* Semi-trasparente per far vedere il background sfocato */
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+    }
 
-        .sidebar {
-            width: 25%;
-            background: linear-gradient(120deg, #e74c3c, #c0392b);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        }
+    .sidebar .circle {
+        width: 180px;
+        height: 180px;
+        background: url('https://via.placeholder.com/400') no-repeat center/cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        animation: pulse 2.5s infinite;
+    }
 
-        .sidebar .circle {
-            width: 180px;
-            height: 180px;
-            background: url('https://via.placeholder.com/400') no-repeat center/cover;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulse 2.5s infinite;
-        }
+    .sidebar button {
+        background: linear-gradient(120deg, #e74c3c, #c0392b); /* Rosso */
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        margin: 10px 0;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 18px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+    .sidebar button:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(120deg, #c0392b, #e74c3c);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
 
-        .sidebar button {
-            background: linear-gradient(120deg, #e74c3c, #c0392b); /* Rosso */
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            margin: 10px 0;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
+    .content {
+        flex-grow: 1;
+        padding: 40px;
+        overflow-y: auto;
+        background: #f4f4f9;
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        animation: slideIn 1s ease-out;
+        z-index: 2; /* Per mantenere il contenuto sopra lo sfondo */
+    }
 
-        .sidebar button:hover {
-            transform: translateY(-5px);
-            background: linear-gradient(120deg, #c0392b, #e74c3c);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-        .content {
-            flex-grow: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background: #f4f4f9;
-            border-radius: 20px;
-            margin: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            animation: slideIn 1s ease-out;
-        }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
 
-        @keyframes slideIn {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .content h1 {
-            font-size: 42px;
-            color: #34495e;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .content p {
-            font-size: 20px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        .content.hidden {
+    @keyframes slideIn {
+        from {
+            transform: translateY(100px);
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s ease-in-out, transform 0.4s;
         }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 
-        .content img {
-            width: 100%;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    .content h1 {
+        font-size: 42px;
+        color: #34495e;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .content p {
+        font-size: 20px;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+        line-height: 1.8;
+    }
+
+    .content.hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease-in-out, transform 0.4s;
+    }
+
+    .content img {
+        width: 100%;
+        border-radius: 15px;
+        margin-top: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+</style>
+ 
+ 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll(".sidebar button");
