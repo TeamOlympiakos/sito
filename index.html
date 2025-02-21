@@ -82,6 +82,31 @@
             display: block;
         }
 
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
         /* Social Media Icons */
         .social-links {
             display: flex;
@@ -143,13 +168,15 @@
                                 <img src="campo3.jpg" alt="Campo Sportivo 3">
                                 <img src="campo4.jpg" alt="Campo Sportivo 4">
                             </div>
+                            <button class="carousel-btn prev">&#10094;</button>
+                            <button class="carousel-btn next">&#10095;</button>
                         </div>`,
 
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>
                             <div class="social-links">
                                 <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_social_white_squircle_%282017%29.svg" alt="YouTube">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
                                 </a>
                                 <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
@@ -179,6 +206,8 @@
             function initCarousel() {
                 let index = 0;
                 const images = document.querySelectorAll(".carousel-images img");
+                const prevBtn = document.querySelector(".prev");
+                const nextBtn = document.querySelector(".next");
 
                 function showSlide() {
                     images.forEach(img => img.classList.remove("active"));
@@ -189,6 +218,16 @@
                     index = (index + 1) % images.length;
                     showSlide();
                 }, 2000);
+
+                prevBtn.addEventListener("click", () => {
+                    index = (index - 1 + images.length) % images.length;
+                    showSlide();
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    index = (index + 1) % images.length;
+                    showSlide();
+                });
             }
 
             initCarousel();
