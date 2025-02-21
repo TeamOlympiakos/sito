@@ -20,7 +20,6 @@
 
         .container {
             display: flex;
-            flex-direction: row;
             min-height: 100vh;
         }
 
@@ -38,16 +37,10 @@
         .sidebar .circle {
             width: 180px;
             height: 180px;
-            background: url('https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/campo1.jpg') no-repeat center/cover;
+            background: url('https://raw.githubusercontent.com/TeamOlympiakos/sito/main/logo.jpg') no-repeat center/cover;
             border-radius: 50%;
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulse 2.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
 
         .sidebar button {
@@ -60,7 +53,6 @@
             cursor: pointer;
             font-size: 18px;
             transition: all 0.4s ease;
-            position: relative;
         }
 
         .sidebar button:hover {
@@ -78,23 +70,55 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .image-gallery {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .image-gallery img {
-            width: 45%;
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            margin: auto;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .image-gallery img:hover {
-            transform: scale(1.05);
+        .carousel {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel img.active {
+            opacity: 1;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
@@ -106,10 +130,21 @@
             <button id="chiSiamoBtn">Chi siamo</button>
             <button id="cosaFacciamoBtn">Cosa facciamo</button>
         </div>
-        <div class="content">
-            <div id="contentArea">
-                <h1>Benvenuti nel Team Olympiakos</h1>
-                <p>Esplora il nostro lavoro e il nostro impegno per la comunità!</p>
+        <div class="content" id="contentArea">
+            <!-- Contenuto della Home -->
+            <h1>TEAM OLYMPIAKOS</h1>
+            <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo.</p>
+            <p>Speriamo di poter contribuire all'integrazione e al futuro della nostra comunità.</p>
+
+            <div class="carousel-container">
+                <div class="carousel">
+                    <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo1.jpg" alt="Campo Sportivo 1">
+                    <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo2.jpg" alt="Campo Sportivo 2">
+                    <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo3.jpg" alt="Campo Sportivo 3">
+                    <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo4.jpg" alt="Campo Sportivo 4">
+                </div>
+                <button class="prev" onclick="prevSlide()">&#10094;</button>
+                <button class="next" onclick="nextSlide()">&#10095;</button>
             </div>
         </div>
     </div>
@@ -117,118 +152,46 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll(".sidebar button");
-            const content = document.querySelector(".content");
-
-            const baseURL = "https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/";
+            const content = document.querySelector("#contentArea");
 
             const pages = {
-                home: `<h1>TEAM OLYMPIAKOS</h1>
-                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
-                        <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
-                   <div class="carousel-container">
-    <div class="carousel">
-        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo1.jpg" alt="Campo Sportivo 1">
-        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo2.jpg" alt="Campo Sportivo 2">
-        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo3.jpg" alt="Campo Sportivo 3">
-        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo4.jpg" alt="Campo Sportivo 4">
-    </div>
-    <button class="prev" onclick="prevSlide()">&#10094;</button>
-    <button class="next" onclick="nextSlide()">&#10095;</button>
-</div>
-
-<style>
-    .carousel-container {
-        position: relative;
-        width: 300px; /* Dimensione quadrata */
-        height: 300px;
-        overflow: hidden;
-        margin: auto;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .carousel {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Adatta l'immagine senza deformarla */
-        position: absolute;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-    }
-
-    .carousel img.active {
-        opacity: 1;
-    }
-
-    .prev, .next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        font-size: 24px;
-        border-radius: 50%;
-    }
-
-    .prev { left: 10px; }
-    .next { right: 10px; }
-
-    .prev:hover, .next:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-</style>
-
-<script>
-    let currentIndex = 0;
-    const slides = document.querySelectorAll('.carousel img');
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    // Mostra la prima immagine all'avvio
-    showSlide(currentIndex);
-</script>
-
+                home: content.innerHTML,
 
                 chiSiamo: `<h1>Chi siamo</h1>
-                            <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>
-                            <p>L'eterogeneità del gruppo favorisce lo scambio di formazione, saperi e competenze su vari livelli. Il gruppo 4A contribuisce a fornire l'elaborazione dei dati scientifici mentre il gruppo 4M cura la parte artistica e creativa.</p>`, 
+                           <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>`,
 
                 cosaFacciamo: `<h1>Cosa facciamo</h1>
-                            <p>Il team Olympiakos ha scelto di monitorare il progetto di riqualificazione del campo sportivo per il contributo sociale che porta alla comunità.</p>
-                            <p>Abbiamo scoperto diversi progetti finanziati dalle politiche di coesione e abbiamo deciso di concentrarci su questo per il suo impatto diretto sulla vita dei giovani.</p>`
+                               <p>Il team Olympiakos ha scelto di monitorare la riqualificazione del campo sportivo di Belvedere Marittimo.</p>`
             };
 
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     const page = this.id.replace("Btn", "");
-                    content.innerHTML = pages[page];
+                    content.innerHTML = pages[page] || pages.home;
                 });
             });
         });
+
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel img');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        showSlide(currentIndex);
     </script>
 </body>
 </html>
