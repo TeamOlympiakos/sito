@@ -125,12 +125,93 @@
                 home: `<h1>TEAM OLYMPIAKOS</h1>
                         <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
                         <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
-                        <div class="image-gallery">
-                            <img src="campo1.jpg" alt="Campo Sportivo 1">
-                            <img src="campo2.jpg" alt="Campo Sportivo 2">
-                            <img src="campo3.jpg" alt="Campo Sportivo 3">
-                            <img src="campo4.jpg" alt="Campo Sportivo 4">
-                        </div>`, 
+                   <div class="carousel-container">
+    <div class="carousel">
+        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo1.jpg" alt="Campo Sportivo 1">
+        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo2.jpg" alt="Campo Sportivo 2">
+        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo3.jpg" alt="Campo Sportivo 3">
+        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo4.jpg" alt="Campo Sportivo 4">
+    </div>
+    <button class="prev" onclick="prevSlide()">&#10094;</button>
+    <button class="next" onclick="nextSlide()">&#10095;</button>
+</div>
+
+<style>
+    .carousel-container {
+        position: relative;
+        width: 300px; /* Dimensione quadrata */
+        height: 300px;
+        overflow: hidden;
+        margin: auto;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Adatta l'immagine senza deformarla */
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .carousel img.active {
+        opacity: 1;
+    }
+
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 24px;
+        border-radius: 50%;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+</style>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel img');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    // Mostra la prima immagine all'avvio
+    showSlide(currentIndex);
+</script>
+
 
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>
