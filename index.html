@@ -38,7 +38,7 @@
         .sidebar .circle {
             width: 180px;
             height: 180px;
-            background: url('https://raw.githubusercontent.com/TeamOlympiakos/sito/main/logo.jpg') no-repeat center/cover;
+            background: url('https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/campo1.jpg') no-repeat center/cover;
             border-radius: 50%;
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -78,56 +78,50 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
-        /* CAROUSEL */
         .carousel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
+            max-width: 600px;
             margin: 20px auto;
+            overflow: hidden;
             border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .carousel {
+        .carousel-images {
             display: flex;
-            width: 100%;
-            height: 100%;
+            transition: transform 0.5s ease-in-out;
         }
 
-        .carousel img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        .carousel-images img {
+            width: 600px;
+            height: 400px;
+            border-radius: 10px;
         }
 
-        .carousel img.active {
-            opacity: 1;
-        }
-
-        .prev, .next {
+        .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
             padding: 10px;
             cursor: pointer;
             font-size: 24px;
-            border-radius: 50%;
+            transition: background 0.3s;
         }
 
-        .prev { left: 10px; }
-        .next { right: 10px; }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
         }
 
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -142,18 +136,6 @@
             <div id="contentArea">
                 <h1>Benvenuti nel Team Olympiakos</h1>
                 <p>Esplora il nostro lavoro e il nostro impegno per la comunità!</p>
-
-                <!-- CAROUSEL DI IMMAGINI -->
-                <div class="carousel-container">
-                    <div class="carousel">
-                        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo1.jpg" class="active" alt="Campo Sportivo 1">
-                        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo2.jpg" alt="Campo Sportivo 2">
-                        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo3.jpg" alt="Campo Sportivo 3">
-                        <img src="https://raw.githubusercontent.com/TeamOlympiakos/sito/main/campo4.jpg" alt="Campo Sportivo 4">
-                    </div>
-                    <button class="prev" onclick="prevSlide()">&#10094;</button>
-                    <button class="next" onclick="nextSlide()">&#10095;</button>
-                </div>
             </div>
         </div>
     </div>
@@ -161,47 +143,74 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll(".sidebar button");
-            const content = document.querySelector("#contentArea");
+            const content = document.querySelector(".content");
+
+            const baseURL = "https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/";
 
             const pages = {
-                home: content.innerHTML,
+                home: `<h1>TEAM OLYMPIAKOS</h1>
+                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
+                        <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
+                        <div class="carousel-container">
+                            <div class="carousel-images">
+                                <img src="${baseURL}campo1.jpg" alt="Campo Sportivo 1">
+                                <img src="${baseURL}campo2.jpg" alt="Campo Sportivo 2">
+                                <img src="${baseURL}campo3.jpg" alt="Campo Sportivo 3">
+                                <img src="${baseURL}campo4.jpg" alt="Campo Sportivo 4">
+                            </div>
+                            <button class="carousel-btn prev">&#10094;</button>
+                            <button class="carousel-btn next">&#10095;</button>
+                        </div>`, 
 
                 chiSiamo: `<h1>Chi siamo</h1>
-                           <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>`,
+                            <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>
+                            <p>L'eterogeneità del gruppo favorisce lo scambio di formazione, saperi e competenze su vari livelli. Il gruppo 4A contribuisce a fornire l'elaborazione dei dati scientifici mentre il gruppo 4M cura la parte artistica e creativa.</p>`, 
 
                 cosaFacciamo: `<h1>Cosa facciamo</h1>
-                               <p>Il team Olympiakos ha scelto di monitorare la riqualificazione del campo sportivo di Belvedere Marittimo.</p>`
+                            <p>Il team Olympiakos ha scelto di monitorare il progetto di riqualificazione del campo sportivo per il contributo sociale che porta alla comunità.</p>
+                            <p>Abbiamo scoperto diversi progetti finanziati dalle politiche di coesione e abbiamo deciso di concentrarci su questo per il suo impatto diretto sulla vita dei giovani.</p>`
             };
 
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     const page = this.id.replace("Btn", "");
-                    content.innerHTML = pages[page] || pages.home;
+                    content.innerHTML = pages[page];
+
+                    if (page === "home") {
+                        setTimeout(initCarousel, 100);
+                    }
                 });
             });
+
+            function initCarousel() {
+                let index = 0;
+                const images = document.querySelector(".carousel-images");
+                const totalImages = images.children.length;
+                const prevBtn = document.querySelector(".prev");
+                const nextBtn = document.querySelector(".next");
+
+                function showSlide() {
+                    images.style.transform = `translateX(-${index * 600}px)`;
+                }
+
+                prevBtn.addEventListener("click", () => {
+                    index = (index - 1 + totalImages) % totalImages;
+                    showSlide();
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    index = (index + 1) % totalImages;
+                    showSlide();
+                });
+
+                setInterval(() => {
+                    index = (index + 1) % totalImages;
+                    showSlide();
+                }, 3000);
+            }
+
+            initCarousel();
         });
-
-        let currentIndex = 0;
-        const slides = document.querySelectorAll('.carousel img');
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % slides.length;
-            showSlide(currentIndex);
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            showSlide(currentIndex);
-        }
-
-        setInterval(nextSlide, 3000); // Cambio automatico ogni 3 secondi
-        showSlide(currentIndex);
     </script>
 </body>
 </html>
