@@ -32,7 +32,7 @@
 
         /* Logo Section */
         .logo-container {
-            width: 150px; /* Increased size */
+            width: 150px;
             height: 150px;
             border-radius: 50%;
             overflow: hidden;
@@ -95,8 +95,6 @@
         .carousel-images img {
             width: 100%;
             height: 100%;
-            display: none;
-            border-radius: 10px;
             position: absolute;
             top: 0;
             left: 0;
@@ -105,7 +103,6 @@
         }
 
         .carousel-images img.active {
-            display: block;
             opacity: 1;
         }
 
@@ -148,12 +145,6 @@
             transition: transform 0.3s ease-in-out, filter 0.3s;
         }
 
-        /* YouTube Special Case */
-        .social-links a.youtube img {
-            width: 100px;
-            height: 50px;
-        }
-
         .social-links a img:hover {
             transform: scale(1.2);
             filter: brightness(1.2);
@@ -177,7 +168,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const buttons = document.querySelectorAll(".sidebar button");
             const content = document.querySelector("#contentArea");
 
             const pages = {
@@ -197,7 +187,7 @@
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>
                             <div class="social-links">
-                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank" class="youtube">
+                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
                                 </a>
                                 <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
@@ -217,16 +207,31 @@
 
             function loadPage(page) {
                 content.innerHTML = pages[page];
-                if (page === "home") setTimeout(initCarousel, 100);
+                if (page === "home") initCarousel();
             }
 
-            loadPage("home");
+            function initCarousel() {
+                let index = 0;
+                const images = document.querySelectorAll(".carousel-images img");
+                const prev = document.querySelector(".prev");
+                const next = document.querySelector(".next");
 
-            buttons.forEach(button => {
+                function showImage(i) {
+                    images.forEach(img => img.classList.remove("active"));
+                    images[i].classList.add("active");
+                }
+
+                prev.onclick = () => showImage(index = (index - 1 + images.length) % images.length);
+                next.onclick = () => showImage(index = (index + 1) % images.length);
+            }
+
+            document.querySelectorAll(".sidebar button").forEach(button => {
                 button.addEventListener("click", function () {
                     loadPage(this.id.replace("Btn", ""));
                 });
             });
+
+            loadPage("home");
         });
     </script>
 </body>
