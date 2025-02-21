@@ -30,6 +30,25 @@
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         }
 
+        /* Logo Section */
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden; /* Ensures image stays inside circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 3px solid white; /* Optional border for better contrast */
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Prevents stretching & keeps full image visible */
+        }
+
         .sidebar button {
             background: linear-gradient(120deg, #2980b9, #8e44ad);
             color: white;
@@ -61,52 +80,6 @@
             animation: fadeIn 1.5s ease-in forwards;
         }
 
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            max-width: 600px;
-            margin: 20px auto;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .carousel-images img {
-            width: 600px;
-            height: 400px;
-            display: none;
-            border-radius: 10px;
-        }
-
-        .carousel-images img.active {
-            display: block;
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 24px;
-            transition: background 0.3s;
-        }
-
-        .carousel-btn:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .prev {
-            left: 10px;
-        }
-
-        .next {
-            right: 10px;
-        }
-
         /* Social Media Icons */
         .social-links {
             display: flex;
@@ -116,9 +89,14 @@
         }
 
         .social-links a img {
-            width: 50px;
-            height: 50px;
+            height: 45px; /* Ensuring all icons are the same height */
             transition: transform 0.3s ease-in-out, filter 0.3s;
+        }
+
+        /* Special case for YouTube (keeps its natural width) */
+        .social-links a.youtube img {
+            height: 45px; 
+            width: auto; /* Keeps aspect ratio */
         }
 
         .social-links a img:hover {
@@ -141,6 +119,12 @@
 <body>
     <div class="container">
         <div class="sidebar">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <img src="logo.jpg" alt="Team Olympiakos Logo">
+            </div>
+
+            <!-- Sidebar Buttons -->
             <button id="homeBtn">Home</button>
             <button id="chiSiamoBtn">Chi siamo</button>
             <button id="cosaFacciamoBtn">Cosa facciamo</button>
@@ -160,23 +144,13 @@
 
             const pages = {
                 home: `<h1>TEAM OLYMPIAKOS</h1>
-                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo.</p>
-                        <div class="carousel-container">
-                            <div class="carousel-images">
-                                <img src="campo1.jpg" class="active" alt="Campo Sportivo 1">
-                                <img src="campo2.jpg" alt="Campo Sportivo 2">
-                                <img src="campo3.jpg" alt="Campo Sportivo 3">
-                                <img src="campo4.jpg" alt="Campo Sportivo 4">
-                            </div>
-                            <button class="carousel-btn prev">&#10094;</button>
-                            <button class="carousel-btn next">&#10095;</button>
-                        </div>`,
+                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo.</p>`,
 
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>
                             <div class="social-links">
-                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank">
-                                    <img src="https://www.flaticon.com/free-icon/youtube_1384060" alt="YouTube">
+                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank" class="youtube">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
                                 </a>
                                 <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
@@ -185,7 +159,7 @@
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
                                 </a>
                                 <a href="https://x.com/TeamOlympiakos" target="_blank">
-                                    <img src="https://www.freepik.com/free-vector/twitter-new-2023-x-logo-white-background-vector_57642995.htm#fromView=keyword&page=1&position=3&uuid=92e6b7c3-a481-4d70-98f1-817163c6d723&query=Twitter+X+Logo" alt="X">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/X_logo_twitter_new_brand_icon.svg" alt="X">
                                 </a>
                             </div>`,
 
@@ -196,41 +170,8 @@
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     content.innerHTML = pages[this.id.replace("Btn", "")];
-
-                    if (this.id === "homeBtn") {
-                        setTimeout(initCarousel, 100);
-                    }
                 });
             });
-
-            function initCarousel() {
-                let index = 0;
-                const images = document.querySelectorAll(".carousel-images img");
-                const prevBtn = document.querySelector(".prev");
-                const nextBtn = document.querySelector(".next");
-
-                function showSlide() {
-                    images.forEach(img => img.classList.remove("active"));
-                    images[index].classList.add("active");
-                }
-
-                setInterval(() => {
-                    index = (index + 1) % images.length;
-                    showSlide();
-                }, 2000);
-
-                prevBtn.addEventListener("click", () => {
-                    index = (index - 1 + images.length) % images.length;
-                    showSlide();
-                });
-
-                nextBtn.addEventListener("click", () => {
-                    index = (index + 1) % images.length;
-                    showSlide();
-                });
-            }
-
-            initCarousel();
         });
     </script>
 </body>
