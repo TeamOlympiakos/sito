@@ -32,8 +32,8 @@
 
         /* Logo Section */
         .logo-container {
-            width: 120px;
-            height: 120px;
+            width: 150px; /* Increased size */
+            height: 150px;
             border-radius: 50%;
             overflow: hidden;
             display: flex;
@@ -86,15 +86,27 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .carousel-images img {
-            width: 600px;
+        .carousel-images {
+            position: relative;
+            width: 100%;
             height: 400px;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: 100%;
             display: none;
             border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth transition effect */
         }
 
         .carousel-images img.active {
             display: block;
+            opacity: 1;
         }
 
         .carousel-btn {
@@ -160,17 +172,14 @@
             <button id="cosaFacciamoBtn">Cosa facciamo</button>
         </div>
         <div class="content">
-            <div id="contentArea">
-                <h1>Benvenuti nel Team Olympiakos</h1>
-                <p>Esplora il nostro lavoro e il nostro impegno per la comunità!</p>
-            </div>
+            <div id="contentArea"></div> <!-- Home is now the default page -->
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll(".sidebar button");
-            const content = document.querySelector(".content");
+            const content = document.querySelector("#contentArea");
 
             const pages = {
                 home: `<h1>TEAM OLYMPIAKOS</h1>
@@ -187,30 +196,23 @@
                         </div>`,
 
                 chiSiamo: `<h1>Chi siamo</h1>
-                            <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>
-                            <div class="social-links">
-                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank" class="youtube">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
-                                </a>
-                                <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-                                </a>
-                                <a href="https://www.facebook.com/groups/570109375720873/?mibextid=K35XfP" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
-                                </a>
-                                <a href="https://x.com/TeamOlympiakos" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/X_logo_twitter_new_brand_icon.svg" alt="X">
-                                </a>
-                            </div>`,
+                            <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>`,
 
                 cosaFacciamo: `<h1>Cosa facciamo</h1>
                                <p>Monitoriamo la riqualificazione del campo sportivo.</p>`
             };
 
+            function loadPage(page) {
+                content.innerHTML = pages[page];
+                if (page === "home") setTimeout(initCarousel, 100);
+            }
+
+            // Load home page by default
+            loadPage("home");
+
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
-                    content.innerHTML = pages[this.id.replace("Btn", "")];
-                    if (this.id === "homeBtn") setTimeout(initCarousel, 100);
+                    loadPage(this.id.replace("Btn", ""));
                 });
             });
 
@@ -240,8 +242,6 @@
                     showSlide();
                 });
             }
-
-            initCarousel();
         });
     </script>
 </body>
