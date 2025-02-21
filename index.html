@@ -13,11 +13,6 @@
             animation: fadeIn 1.5s ease-in;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .container {
             display: flex;
             flex-direction: row;
@@ -35,21 +30,6 @@
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         }
 
-        .sidebar .circle {
-            width: 180px;
-            height: 180px;
-            background: url('https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/campo1.jpg') no-repeat center/cover;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: pulse 2.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
         .sidebar button {
             background: linear-gradient(120deg, #2980b9, #8e44ad);
             color: white;
@@ -60,7 +40,6 @@
             cursor: pointer;
             font-size: 18px;
             transition: all 0.4s ease;
-            position: relative;
         }
 
         .sidebar button:hover {
@@ -78,6 +57,7 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
+        /* Carousel styles */
         .carousel-container {
             position: relative;
             max-width: 600px;
@@ -87,15 +67,15 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .carousel-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
         .carousel-images img {
             width: 600px;
             height: 400px;
+            display: none; /* Hide all images by default */
             border-radius: 10px;
+        }
+
+        .carousel-images img.active {
+            display: block; /* Show only active image */
         }
 
         .carousel-btn {
@@ -127,7 +107,6 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <div class="circle"></div>
             <button id="homeBtn">Home</button>
             <button id="chiSiamoBtn">Chi siamo</button>
             <button id="cosaFacciamoBtn">Cosa facciamo</button>
@@ -145,18 +124,17 @@
             const buttons = document.querySelectorAll(".sidebar button");
             const content = document.querySelector(".content");
 
-            const baseURL = "https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/";
-
             const pages = {
                 home: `<h1>TEAM OLYMPIAKOS</h1>
                         <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
                         <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
+                        
                         <div class="carousel-container">
                             <div class="carousel-images">
-                                <img src="${baseURL}campo1.jpg" alt="Campo Sportivo 1">
-                                <img src="${baseURL}campo2.jpg" alt="Campo Sportivo 2">
-                                <img src="${baseURL}campo3.jpg" alt="Campo Sportivo 3">
-                                <img src="${baseURL}campo4.jpg" alt="Campo Sportivo 4">
+                                <img src="campo1.jpg" class="active" alt="Campo Sportivo 1">
+                                <img src="campo2.jpg" alt="Campo Sportivo 2">
+                                <img src="campo3.jpg" alt="Campo Sportivo 3">
+                                <img src="campo4.jpg" alt="Campo Sportivo 4">
                             </div>
                             <button class="carousel-btn prev">&#10094;</button>
                             <button class="carousel-btn next">&#10095;</button>
@@ -184,29 +162,24 @@
 
             function initCarousel() {
                 let index = 0;
-                const images = document.querySelector(".carousel-images");
-                const totalImages = images.children.length;
+                const images = document.querySelectorAll(".carousel-images img");
                 const prevBtn = document.querySelector(".prev");
                 const nextBtn = document.querySelector(".next");
 
                 function showSlide() {
-                    images.style.transform = `translateX(-${index * 600}px)`;
+                    images.forEach(img => img.classList.remove("active"));
+                    images[index].classList.add("active");
                 }
 
                 prevBtn.addEventListener("click", () => {
-                    index = (index - 1 + totalImages) % totalImages;
+                    index = (index - 1 + images.length) % images.length;
                     showSlide();
                 });
 
                 nextBtn.addEventListener("click", () => {
-                    index = (index + 1) % totalImages;
+                    index = (index + 1) % images.length;
                     showSlide();
                 });
-
-                setInterval(() => {
-                    index = (index + 1) % totalImages;
-                    showSlide();
-                }, 3000);
             }
 
             initCarousel();
