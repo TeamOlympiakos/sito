@@ -38,7 +38,7 @@
         .sidebar .circle {
             width: 180px;
             height: 180px;
-            background: url('https://via.placeholder.com/400') no-repeat center/cover;
+            background: url('https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/campo1.jpg') no-repeat center/cover;
             border-radius: 50%;
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -78,37 +78,16 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 30px;
-            transition: color 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: #1abc9c;
-        }
-
-        .social-icons img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-        }
-
         .image-gallery {
             display: flex;
             gap: 20px;
             margin-top: 20px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .image-gallery img {
-            width: 30%;
+            width: 45%;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
@@ -140,45 +119,26 @@
             const buttons = document.querySelectorAll(".sidebar button");
             const content = document.querySelector(".content");
 
+            const baseURL = "https://raw.githubusercontent.com/tuo-username/nome-repo/main/images/";
+
             const pages = {
                 home: `<h1>TEAM OLYMPIAKOS</h1>
                         <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
                         <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
                         <div class="image-gallery">
-                            <img src="https://via.placeholder.com/300x200" alt="Campo Sportivo Belvedere Marittimo 1">
-                            <img src="https://via.placeholder.com/300x200" alt="Campo Sportivo Belvedere Marittimo 2">
-                            <img src="https://via.placeholder.com/300x200" alt="Campo Sportivo Belvedere Marittimo 3">
-                        </div>`,
+                            <img src="${baseURL}campo1.jpg" alt="Campo Sportivo 1">
+                            <img src="${baseURL}campo2.jpg" alt="Campo Sportivo 2">
+                            <img src="${baseURL}campo3.jpg" alt="Campo Sportivo 3">
+                            <img src="${baseURL}campo4.jpg" alt="Campo Sportivo 4">
+                        </div>`, 
 
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>
-                            <p>L'eterogeneità del gruppo favorisce lo scambio di formazione, saperi e competenze su vari livelli. Il gruppo 4A contribuisce a fornire l'elaborazione dei dati scientifici mentre il gruppo 4M cura la parte artistica e creativa.</p>
-                            <p>Per una migliore pianificazione del lavoro sono stati individuati i seguenti profili:</p>
-                            <ul>
-                                <li>Project Manager</li>
-                                <li>Analista</li>
-                                <li>Designer</li>
-                                <li>Social Media Manager</li>
-                                <li>Report</li>
-                            </ul>
-                            <p>Il team ha attivato tutti i canali social necessari per comunicare con gli enti esterni:</p>
-                            <div class="social-icons">
-                                <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram">
-                                </a>
-                                <a href="https://x.com/TeamOlympiakos" target="_blank">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT81LGhC2u7DrTVVFQVzK3lUrOajZHxQAmh5Q&s" alt="X">
-                                </a>
-                                <a href="https://www.youtube.com/@Olympiakos-o1x" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
-                                </a>
-                            </div>`,
+                            <p>L'eterogeneità del gruppo favorisce lo scambio di formazione, saperi e competenze su vari livelli. Il gruppo 4A contribuisce a fornire l'elaborazione dei dati scientifici mentre il gruppo 4M cura la parte artistica e creativa.</p>`, 
 
                 cosaFacciamo: `<h1>Cosa facciamo</h1>
-                            <p>Il team Olympiakos, dopo aver valutato i progetti disponibili sul portale di OpenCoesione finanziati dalle politiche di Coesione sul territorio di Belvedere Marittimo, ha scelto il progetto sopra indicato per molteplici motivi. Il primo e più importante dei quali è interesse comune per il contributo sociale che il progetto porta alla comunità.</p>
-                            <p>Navigando sul sito opencoesione.gov abbiamo preso atto dei numerosi progetti finanziati dalle politiche di coesione attive sul nostro territorio. Siamo rimasti sorpresi dal fatto che le istituzioni politiche investono in nuovi progetti per migliorare la qualità delle strutture sociali, culturali e ludiche sul territorio.</p>
-                            <p>Inizialmente, tra progetti visualizzati la motivazione comune che ci ha guidati nel monitoraggio della riqualificazione del campo è nata poiché proprio in quei giorni si stavano definendo le modalità per l'inaugurazione del campo riqualificato.</p>
-                            <p>Le attività programmate per la promozione saranno: la progettazione di un sito web e un torneo scolastico di calcio, non solo per promuovere il campo, ma anche per incentivare l'inclusione sociale dei ragazzi.</p>`
+                            <p>Il team Olympiakos ha scelto di monitorare il progetto di riqualificazione del campo sportivo per il contributo sociale che porta alla comunità.</p>
+                            <p>Abbiamo scoperto diversi progetti finanziati dalle politiche di coesione e abbiamo deciso di concentrarci su questo per il suo impatto diretto sulla vita dei giovani.</p>`
             };
 
             buttons.forEach(button => {
