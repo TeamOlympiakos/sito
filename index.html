@@ -35,18 +35,18 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            overflow: hidden; /* Ensures image stays inside circle */
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            border: 3px solid white; /* Optional border for better contrast */
+            border: 3px solid white;
         }
 
         .logo-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Prevents stretching & keeps full image visible */
+            object-fit: cover;
         }
 
         .sidebar button {
@@ -59,8 +59,6 @@
             cursor: pointer;
             font-size: 18px;
             transition: all 0.4s ease;
-            opacity: 0;
-            animation: slideIn 1s ease-in-out forwards;
         }
 
         .sidebar button:hover {
@@ -76,8 +74,52 @@
             border-radius: 20px;
             margin: 20px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-images img {
+            width: 600px;
+            height: 400px;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .carousel-images img.active {
+            display: block;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
         }
 
         /* Social Media Icons */
@@ -89,30 +131,18 @@
         }
 
         .social-links a img {
-            height: 45px; /* Ensuring all icons are the same height */
+            height: 45px;
             transition: transform 0.3s ease-in-out, filter 0.3s;
         }
 
-        /* Special case for YouTube (keeps its natural width) */
         .social-links a.youtube img {
-            height: 45px; 
-            width: auto; /* Keeps aspect ratio */
+            height: 45px;
+            width: auto;
         }
 
         .social-links a img:hover {
             transform: scale(1.2);
             filter: brightness(1.2);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -144,7 +174,17 @@
 
             const pages = {
                 home: `<h1>TEAM OLYMPIAKOS</h1>
-                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo.</p>`,
+                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo.</p>
+                        <div class="carousel-container">
+                            <div class="carousel-images">
+                                <img src="campo1.jpg" class="active" alt="Campo Sportivo 1">
+                                <img src="campo2.jpg" alt="Campo Sportivo 2">
+                                <img src="campo3.jpg" alt="Campo Sportivo 3">
+                                <img src="campo4.jpg" alt="Campo Sportivo 4">
+                            </div>
+                            <button class="carousel-btn prev">&#10094;</button>
+                            <button class="carousel-btn next">&#10095;</button>
+                        </div>`,
 
                 chiSiamo: `<h1>Chi siamo</h1>
                             <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale.</p>
@@ -170,8 +210,38 @@
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     content.innerHTML = pages[this.id.replace("Btn", "")];
+                    if (this.id === "homeBtn") setTimeout(initCarousel, 100);
                 });
             });
+
+            function initCarousel() {
+                let index = 0;
+                const images = document.querySelectorAll(".carousel-images img");
+                const prevBtn = document.querySelector(".prev");
+                const nextBtn = document.querySelector(".next");
+
+                function showSlide() {
+                    images.forEach(img => img.classList.remove("active"));
+                    images[index].classList.add("active");
+                }
+
+                setInterval(() => {
+                    index = (index + 1) % images.length;
+                    showSlide();
+                }, 2000);
+
+                prevBtn.addEventListener("click", () => {
+                    index = (index - 1 + images.length) % images.length;
+                    showSlide();
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    index = (index + 1) % images.length;
+                    showSlide();
+                });
+            }
+
+            initCarousel();
         });
     </script>
 </body>
