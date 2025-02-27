@@ -67,8 +67,90 @@
             background: linear-gradient(120deg, #8e44ad, #2980b9);
         }
 
-        /* Additional logo */
-        .additional-logo {
+        .content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: #f4f4f9;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-images img.active {
+            opacity: 1;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        /* Social Media Icons */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a img {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.3s ease-in-out, filter 0.3s;
+        }
+
+        .social-links a img:hover {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+         .additional-logo {
             margin-top: 20px;
         }
     </style>
@@ -82,7 +164,6 @@
             <button id="homeBtn">Home</button>
             <button id="chiSiamoBtn">Chi siamo</button>
             <button id="cosaFacciamoBtn">Cosa facciamo</button>
-            
             <div class="logo-container additional-logo">
                 <img src="comune.jpg" alt="Comune Logo">
             </div>
@@ -91,5 +172,88 @@
             <div id="contentArea"></div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const content = document.querySelector("#contentArea");
+
+            const pages = {
+                home: `<h1>TEAM OLYMPIAKOS</h1>
+                        <p>Il progetto di monitoraggio civico ha come obiettivo principale promuovere il campo sportivo del nostro comune in una piccola realtà come Belvedere Marittimo, finalizzato ad incentivare la partecipazione e l'inclusione dei giovani in un contesto sociale povero di stimoli culturali.</p>
+                        <p>Sin da subito vogliamo metterci in gioco per cercare di rendere migliore il futuro della nostra comunità scegliendo di lavorare su queste tematiche a noi care, sperando di poter contribuire non solo all'integrazione ma anche al futuro della nostra comunità.</p>
+                        <div class="carousel-container">
+                            <div class="carousel-images">
+                                <img src="campo1.jpg" class="active">
+                                <img src="campo2.jpg">
+                                <img src="campo3.jpg">
+                                <img src="campo4.jpg">
+                            </div>
+                            <button class="carousel-btn prev">&#10094;</button>
+                            <button class="carousel-btn next">&#10095;</button>
+                        </div>`,
+
+                chiSiamo: `<h1>Chi siamo</h1>
+                            <p>Il team è formato dalle classi 4A Liceo Scientifico e 4M Liceo Musicale dell’istituto Tommaso Campanella di Belvedere Marittimo.</p>
+                            <p>L'eterogeneità del gruppo favorisce lo scambio di formazione, saperi e competenze su vari livelli. Il gruppo 4A contribuisce a fornire l'elaborazione dei dati scientifici mentre il gruppo 4M cura la parte artistica e creativa.</p>
+                            <p>Per una migliore pianificazione del lavoro sono stati individuati i seguenti profili:</p>
+                            <ul>
+                                <li>Project Manager</li>
+                                <li>Analista</li>
+                                <li>Designer</li>
+                                <li>Social Media Manager</li>
+                                <li>Report</li>
+                            </ul>
+                            <p>Il team ha attivato tutti i canali social necessari per comunicare con gli enti esterni:</p>
+                            <div class="social-links">
+                                <a href="http://www.youtube.com/@Olympiakos-o1x" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
+                                </a>
+                                <a href="https://www.instagram.com/team_olympiakos/profilecard/" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+                                </a>
+                                <a href="https://www.facebook.com/groups/570109375720873/?mibextid=K35XfP" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+                                </a>
+                                <a href="https://x.com/TeamOlympiakos" target="_blank">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/X_logo_twitter_new_brand_icon.svg">
+                                </a>
+                            </div>`,
+
+                cosaFacciamo: `<h1>Cosa facciamo</h1>
+                             <p>Il team Olympiakos, dopo aver valutato i progetti disponibili sul portale di OpenCoesione finanziati dalle politiche di Coesione sul territorio di Belvedere Marittimo, ha scelto il progetto sopra indicato per molteplici motivi. Il primo e più importante dei quali è interesse comune per il contributo sociale che il progetto porta alla comunità.</p>
+                            <p>Navigando sul sito opencoesione.gov abbiamo preso atto dei numerosi progetti finanziati dalle politiche di coesione attive sul nostro territorio. Siamo rimasti sorpresi dal fatto che le istituzioni politiche investono in nuovi progetti per migliorare la qualità delle strutture sociali, culturali e ludiche sul territorio.</p>
+                            <p>Inizialmente, tra progetti visualizzati la motivazione comune che ci ha guidati nel monitoraggio della riqualificazione del campo è nata poiché proprio in quei giorni si stavano definendo le modalità per l'inaugurazione del campo riqualificato.</p>
+                            <p>Le attività programmate per la promozione saranno: la progettazione di un sito web e un torneo scolastico di calcio, non solo per promuovere il campo, ma anche per incentivare l'inclusione sociale dei ragazzi.</p>`
+            };
+
+            function loadPage(page) {
+                content.innerHTML = pages[page];
+                if (page === "home") initCarousel();
+            }
+
+            function initCarousel() {
+                let index = 0;
+                const images = document.querySelectorAll(".carousel-images img");
+                const prev = document.querySelector(".prev");
+                const next = document.querySelector(".next");
+
+                function showImage(i) {
+                    images.forEach(img => img.classList.remove("active"));
+                    images[i].classList.add("active");
+                }
+
+                prev.onclick = () => showImage(index = (index - 1 + images.length) % images.length);
+                next.onclick = () => showImage(index = (index + 1) % images.length);
+            }
+
+            document.querySelectorAll(".sidebar button").forEach(button => {
+                button.addEventListener("click", function () {
+                    loadPage(this.id.replace("Btn", ""));
+                });
+            });
+
+            loadPage("home");
+        });
+    </script>
 </body>
 </html>
